@@ -1,10 +1,14 @@
 {
   "name": "jQuery-Youtube-Url-To-FullScreen-Video-Lightbox",
   "authors": [
-    "darklymnx <darkun91@gmail.com>"
+    "darkylmnx <darkun91@gmail.com>"
   ],
   "description": "just a simple jQuery lightbox youtube video plugin",
-  "main": "dist/jquery.yu2fvl.min.js",
+  "main": [
+    "dist/jquery.yu2fvl.js",
+    "dist/jquery.yu2fvl.css",
+  ],
+  "version": "0.1.0",
   "moduleType": [],
   "keywords": [
     "jquery",
@@ -25,6 +29,7 @@
     "tests"
   ],
   "dependencies": {
-    "jquery": ">=1.7"
+    "jquery": ">=1.7",
+    "prism": "^1.4.1"
   }
 }

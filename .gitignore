@@ -48,3 +48,6 @@ Temporary Items
 
 # Bower component files
 bower_components
+
+# Node modules files
+node_modules
