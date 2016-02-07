@@ -44,9 +44,13 @@ You can also directly pass a **youtube video id** to the plugin
 All this works perfectly with different anchors on the same selector with different href
 
 `<a class="play-1" href="https://www.youtube.com/watch?v=ID-1">Play my video</a>`
+
 `<a class="play-2" href="https://www.youtube.com/watch?v=ID-2">Play my video</a>`
+
 `<a class="play-3" href="https://www.youtube.com/watch?v=ID-3">Play my video</a>`
+
 `<a class="play-4" href="https://www.youtube.com/watch?v=ID-4">Play my video</a>`
+
 ...
 
 `<script>`
