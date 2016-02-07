@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Demo - jQuery Youtube Url To FullScreen Video Lightbox</title>
+  <link href="../bower_components/prism/themes/prism.css" rel="stylesheet" type="text/css">
+  <link href="../src/jquery.yu2fvl.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+  <h1>jQuery Youtube Url To FullScreen Video Lightbox</h1>
+
+  <p>Demo with <strong>youtube.com</strong> format</p>
+
+  <p>
+    <a class="play-1" href="https://www.youtube.com/watch?v=AbTUw7aTITg">Play my video</a>
+  </p>
+  <pre>
+    <code class="language-html">
+    &lt;a class=&quot;play-1&quot; href=&quot;https://www.youtube.com/watch?v=AbTUw7aTITg&quot;&gt;Play my video&lt;/a&gt;
+
+    &lt;script&gt;
+      $(".play-1").yu2fvl();
+    &lt;/script&gt;
+    </code>
+  </pre>
+
+  <p>Demo with <strong>youtu.be</strong> format</p>
+
+  <p>
+    <a class="play-2" href="https://youtu.be/AbTUw7aTITg">Play my video</a> https://youtu.be/AbTUw7aTITg
+  </p>
+  <pre>
+    <code class="language-html">
+    &lt;a class=&quot;play-2&quot; href=&quot;https://youtu.be/AbTUw7aTITg&quot;&gt;Play my video&lt;/a&gt; https://youtu.be/AbTUw7aTITg
+
+    &lt;script&gt;
+      $(".play-2").yu2fvl();
+    &lt;/script&gt;
+    </code>
+  </pre>
+
+  <p>Demo with direct youtbe video id "AbTUw7aTITg" and different aspect ratio 4:3</p>
+
+  <p>
+    <button class="play-3">Play my video</button>
+  </p>
+  <pre>
+    <code class="language-html">
+    &lt;button class=&quot;play-3&quot;&gt;Play my video&lt;/button&gt;
+
+    &lt;script&gt;
+      $(".play-3").yu2fvl({ vid: "AbTUw7aTITg", ratio: 4/3 });
+    &lt;/script&gt;
+    </code>
+  </pre>
+
+  <p>Demo with a big minimum padding on the edges. Why paddings ? well if you want to give a fixed size to your close button in css, you better want to always have a minimum of space</p>
+
+  <p>
+    <button class="play-4">Play my video</button>
+  </p>
+  <pre>
+    <code class="language-html">
+    &lt;button class=&quot;play-4&quot;&gt;Play my video&lt;/button&gt;
+
+    &lt;script&gt;
+      $(".play-4").yu2fvl({ minPaddingY: 200, minPaddingX: 200, vid: "AbTUw7aTITg", ratio: 21/9 });
+    &lt;/script&gt;
+    </code>
+  </pre>
+
+  <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="../bower_components/prism/prism.js"></script>
+  <script src="../src/jquery.yu2fvl.js"></script>
+  <script>$(".play-1, .play-2").yu2fvl();</script>
+  <script>$(".play-3").yu2fvl({ vid: "AbTUw7aTITg", ratio: 4/3 });</script>
+  <script>$(".play-4").yu2fvl({ minPaddingY: 200, minPaddingX: 200, vid: "AbTUw7aTITg", ratio: 21/9 });</script>
+  <script>
+
+  </script>
+</body>
+</html>

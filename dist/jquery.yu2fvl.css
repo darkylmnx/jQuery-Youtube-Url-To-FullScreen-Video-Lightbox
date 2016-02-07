@@ -1,0 +1,27 @@
+.yu2fvl {
+  z-index: 9999;
+  top: 0;
+}
+
+.yu2fvl-iframe {
+  display: block;
+  height: 100%;
+  width: 100%;
+  border: 0;
+}
+
+.yu2fvl-overlay {
+  z-index: 9998;
+  background: #000;
+  opacity: 0.8;
+}
+
+.yu2fvl-close {
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  color: #fff;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
