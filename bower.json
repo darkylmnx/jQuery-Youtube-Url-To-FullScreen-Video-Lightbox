@@ -1,0 +1,30 @@
+{
+  "name": "jQuery-Youtube-Url-To-FullScreen-Video-Lightbox",
+  "authors": [
+    "darklymnx <darkun91@gmail.com>"
+  ],
+  "description": "just a simple jQuery lightbox youtube video plugin",
+  "main": "dist/jquery.yu2fvl.min.js",
+  "moduleType": [],
+  "keywords": [
+    "jquery",
+    "plugin",
+    "youtube",
+    "lightbox",
+    "fullscreen",
+    "video",
+    "simple"
+  ],
+  "license": "MIT",
+  "homepage": "http://otakod.es/yu2fvl",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": ">=1.7"
+  }
+}
