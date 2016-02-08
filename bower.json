@@ -6,7 +6,7 @@
   "description": "just a simple jQuery lightbox youtube video plugin",
   "main": [
     "dist/jquery.yu2fvl.js",
-    "dist/jquery.yu2fvl.css",
+    "dist/jquery.yu2fvl.css"
   ],
   "version": "0.1.0",
   "moduleType": [],
