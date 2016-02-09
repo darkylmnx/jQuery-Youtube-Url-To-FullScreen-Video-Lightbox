@@ -51,3 +51,7 @@ bower_components
 
 # Node modules files
 node_modules
+
+# Sublime user prefs
+*.sublime-project
+*.sublime-workspace
