@@ -23,6 +23,10 @@ Add the **jquery.yu2fvl.js** to your project AFTER loading jQuery
 You can find both files in **dist/** with the js minified or
 You can find both files in **src/** with the js' original code
 
+## Build (only if you want to play around with the code)
+
+To build just open your console in the folder and run "gulp" after your changes on the files in the **SRC** folder
+
 ## Usage
 
 Very simple : target an anchor, apply the plugin.
