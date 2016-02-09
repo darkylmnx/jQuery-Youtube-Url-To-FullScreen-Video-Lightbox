@@ -7,6 +7,7 @@
     var win = $( w ),
 
         ytUrlPrefix = "https://www.youtube.com/embed/",
+        ytEnableJsApi = "?enablejsapi=1",
         getYTvid = function( url ) {
 
             if ( /youtu\.be/.test( url ) ) {
@@ -46,7 +47,7 @@
         },
 
         lightboxCss = {
-            "display": "none", 
+            "display": "none",
             "position": "fixed"
         },
 
@@ -56,16 +57,16 @@
         },
 
         overlayCss = {
-            "display": "none", 
+            "display": "none",
             "position": "fixed",
             "top": 0,
             "left": 0,
             "width": "100%",
             "height": "100%"
         };
- 
+
     $.fn.yu2fvl = function( options ) {
- 
+
         // default options.
         var settings = $.extend({
             minPaddingX: 50,
@@ -79,7 +80,7 @@
             vid: false
         }, options );
 
-        // if there"s a video id, 
+        // if there"s a video id,
         if  ( settings.vid !== false ) {
             createLightbox( this, settings.vid );
             return this;
@@ -109,7 +110,7 @@
 
                 iframe = $( doc.createElement("IFRAME" ) )
                     .addClass( settings.cssClass + settings.iframeCssClass )
-                    .attr( { src: ytUrlPrefix + vid } )
+                    .attr( { src: ytUrlPrefix + vid + ytEnableJsApi } )
                     .css( iframeCss );
 
             // append the iframe to the lightbox and the lightbox & overlay to the body
@@ -133,18 +134,18 @@
                     win_height = win.height() - settings.minPaddingY,
                     win_ratio = win_width / win_height,
                     ratio = settings.ratio;
-            
+
                 if ( win_ratio > ratio ) {
                     lightbox.height( win_height );
                     lightbox.width( win_height * ratio );
                 }
-                
+
                 else {
                     lightbox.width( win_width );
                     lightbox.height( win_width / ratio );
                 }
-                
-                // we use the original window width and height to not include padding 
+
+                // we use the original window width and height to not include padding
                 // in the centering process
                 lightbox.css( "left", ( win.width() - lightbox.width() ) / 2 );
                 lightbox.css( "top", ( win.height() - lightbox.height() ) / 2 );
@@ -153,6 +154,7 @@
             function attachOpenVideo( elem ) {
                 elem.on("click", function ( e ) {
                     e.preventDefault();
+                    callPlayer(iframe[0], "playVideo");
                     openVideo();
                 });
             }
@@ -160,6 +162,7 @@
             function attachCloseVideo( elem ) {
                 elem.on("click", function ( e ) {
                     e.preventDefault();
+                    callPlayer(iframe[0], "pauseVideo");
                     closeVideo();
                 });
             }
@@ -181,7 +184,18 @@
                     .stop()
                     .fadeOut( "fast" );
             }
+
+            // send commands to the youtube API
+            function callPlayer(iframe, func, args) {
+                if ( iframe.src.indexOf('youtube.com/embed') !== -1) {
+                    iframe.contentWindow.postMessage( JSON.stringify({
+                        'event': 'command',
+                        'func': func,
+                        'args': args || []
+                    } ), '*');
+                }
+            }
         }
     };
- 
+
 })( jQuery, window, document );
