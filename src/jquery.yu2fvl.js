@@ -46,6 +46,17 @@
             }
         },
 
+        // send commands to the youtube API
+        callPlayer = function(iframe, func, args) {
+            if ( iframe.src.indexOf('youtube.com/embed') !== -1) {
+                iframe.contentWindow.postMessage( JSON.stringify({
+                    'event': 'command',
+                    'func': func,
+                    'args': args || []
+                } ), '*');
+            }
+        },
+
         lightboxCss = {
             "display": "none",
             "position": "fixed"
@@ -183,17 +194,6 @@
                 lightbox
                     .stop()
                     .fadeOut( "fast" );
-            }
-
-            // send commands to the youtube API
-            function callPlayer(iframe, func, args) {
-                if ( iframe.src.indexOf('youtube.com/embed') !== -1) {
-                    iframe.contentWindow.postMessage( JSON.stringify({
-                        'event': 'command',
-                        'func': func,
-                        'args': args || []
-                    } ), '*');
-                }
             }
         }
     };
