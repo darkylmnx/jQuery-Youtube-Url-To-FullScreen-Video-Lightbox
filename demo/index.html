@@ -69,12 +69,33 @@
     </code>
   </pre>
 
+  <p>Demo called directly from JavaScript. </p>
+  <p>
+    <button class="play-5">Play my video</button>
+  </p>
+  <pre>
+    <code class="language-html">
+    &lt;button class=&quot;play-5&quot;&gt;Play my video&lt;/button&gt;
+
+    &lt;script&gt;
+      $(".play-5").click( function() {
+	    $.fn.yu2fvl({ vid: "AbTUw7aTITg", ratio: 21/9, open: true });
+	  });
+    &lt;/script&gt;
+    </code>
+  </pre>
+
   <script src="../bower_components/jquery/dist/jquery.min.js"></script>
   <script src="../bower_components/prism/prism.js"></script>
   <script src="../src/jquery.yu2fvl.js"></script>
   <script>$(".play-1, .play-2").yu2fvl();</script>
   <script>$(".play-3").yu2fvl({ vid: "AbTUw7aTITg", ratio: 4/3 });</script>
   <script>$(".play-4").yu2fvl({ minPaddingY: 200, minPaddingX: 200, vid: "AbTUw7aTITg", ratio: 21/9 });</script>
+  <script>
+    $(".play-5").click( function() {
+      $.fn.yu2fvl({ vid: "AbTUw7aTITg", ratio: 21/9, open: true });
+    });
+  </script>
   <script>
 
   </script>

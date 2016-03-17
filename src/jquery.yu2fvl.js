@@ -78,6 +78,9 @@
 
     $.fn.yu2fvl = function( options ) {
 
+        var self = this;
+        self.loaded = false;
+
         // default options.
         var settings = $.extend({
             minPaddingX: 50,
@@ -88,8 +91,10 @@
             iframeCssClass: "-iframe",
             closeCssClass: "-close",
             closeText: "X",
+            open: false,
             vid: false
         }, options );
+
 
         // if there"s a video id,
         if  ( settings.vid !== false ) {
@@ -129,10 +134,29 @@
                 .append( iframe )
                 .append( close );
 
+            iframe.on( 'load', function() {
+                self.loaded = true;
+            });
+
+
+
             $( "body" ).append( overlay ).append( lightbox );
 
             // open the video on click on the btn
-            attachOpenVideo( btn );
+            if( settings.open ) {
+                // Poll until iframe loads
+                function waitUntilLoaded() {
+                    if( !self.loaded ) {
+                        window.requestAnimationFrame(waitUntilLoaded);
+                        return false;
+                    }
+                    playVideo();
+                }
+
+                waitUntilLoaded();
+            } else {
+                attachOpenVideo( btn );
+            }
             attachCloseVideo( close.add( overlay ) );
 
             // set window resize and trigger to init resize
@@ -162,11 +186,15 @@
                 lightbox.css( "top", ( win.height() - lightbox.height() ) / 2 );
             }
 
+            function playVideo() {
+                callPlayer(iframe[0], "playVideo", [], self);
+                openVideo();
+            }
+
             function attachOpenVideo( elem ) {
                 elem.on("click", function ( e ) {
                     e.preventDefault();
-                    callPlayer(iframe[0], "playVideo");
-                    openVideo();
+                    playVideo();
                 });
             }
 
