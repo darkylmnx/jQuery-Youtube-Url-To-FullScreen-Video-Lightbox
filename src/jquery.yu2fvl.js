@@ -78,9 +78,6 @@
 
     $.fn.yu2fvl = function( options ) {
 
-        var self = this;
-        self.loaded = false;
-
         // default options.
         var settings = $.extend({
             minPaddingX: 50,
@@ -134,29 +131,18 @@
                 .append( iframe )
                 .append( close );
 
-            iframe.on( 'load', function() {
-                self.loaded = true;
-            });
-
-
-
             $( "body" ).append( overlay ).append( lightbox );
 
-            // open the video on click on the btn
-            if( settings.open ) {
-                // Poll until iframe loads
-                function waitUntilLoaded() {
-                    if( !self.loaded ) {
-                        window.requestAnimationFrame(waitUntilLoaded);
-                        return false;
-                    }
-                    playVideo();
-                }
-
-                waitUntilLoaded();
+            if(settings.open ) {
+                // play the video when the iframe finishes loading
+                iframe.on( 'load', function() {
+				    playVideo();
+                });
             } else {
+                // open the video on click on the btn
                 attachOpenVideo( btn );
-            }
+			}
+
             attachCloseVideo( close.add( overlay ) );
 
             // set window resize and trigger to init resize
@@ -187,7 +173,7 @@
             }
 
             function playVideo() {
-                callPlayer(iframe[0], "playVideo", [], self);
+                callPlayer(iframe[0], "playVideo");
                 openVideo();
             }
 
@@ -216,12 +202,20 @@
             }
 
             function closeVideo() {
+
                 overlay
                     .stop()
                     .fadeOut( "fast" );
                 lightbox
                     .stop()
-                    .fadeOut( "fast" );
+                    .fadeOut( "fast", function() {
+						// Destroy video if it's not attached to anything 
+						// to prevent duplicates
+						if(settings.open) {
+							overlay.remove();
+							lightbox.remove();
+						} 
+					});
             }
         }
     };
