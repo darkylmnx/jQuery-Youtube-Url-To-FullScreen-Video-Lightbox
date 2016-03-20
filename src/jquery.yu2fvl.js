@@ -88,8 +88,10 @@
             iframeCssClass: "-iframe",
             closeCssClass: "-close",
             closeText: "X",
+            open: false,
             vid: false
         }, options );
+
 
         // if there"s a video id,
         if  ( settings.vid !== false ) {
@@ -131,8 +133,16 @@
 
             $( "body" ).append( overlay ).append( lightbox );
 
-            // open the video on click on the btn
-            attachOpenVideo( btn );
+            if(settings.open ) {
+                // play the video when the iframe finishes loading
+                iframe.on( 'load', function() {
+				    playVideo();
+                });
+            } else {
+                // open the video on click on the btn
+                attachOpenVideo( btn );
+			}
+
             attachCloseVideo( close.add( overlay ) );
 
             // set window resize and trigger to init resize
@@ -162,11 +172,15 @@
                 lightbox.css( "top", ( win.height() - lightbox.height() ) / 2 );
             }
 
+            function playVideo() {
+                callPlayer(iframe[0], "playVideo");
+                openVideo();
+            }
+
             function attachOpenVideo( elem ) {
                 elem.on("click", function ( e ) {
                     e.preventDefault();
-                    callPlayer(iframe[0], "playVideo");
-                    openVideo();
+                    playVideo();
                 });
             }
 
@@ -188,12 +202,20 @@
             }
 
             function closeVideo() {
+
                 overlay
                     .stop()
                     .fadeOut( "fast" );
                 lightbox
                     .stop()
-                    .fadeOut( "fast" );
+                    .fadeOut( "fast", function() {
+						// Destroy video if it's not attached to anything 
+						// to prevent duplicates
+						if(settings.open) {
+							overlay.remove();
+							lightbox.remove();
+						} 
+					});
             }
         }
     };

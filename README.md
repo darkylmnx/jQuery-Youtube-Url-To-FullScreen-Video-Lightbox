@@ -97,6 +97,8 @@ The various youtube url formats acceptable :
 *vid*: false
 // set directly a youtube video id (though using an anchor is cool for SEO !)
 
+*open*: false
+// Open the lightbox immediately from JavaScript. Requires *vid* to be set to work properly.
 
 ## Contributing
 
