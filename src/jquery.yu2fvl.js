@@ -4,220 +4,235 @@
 
 (function ( $, w, doc ) {
 
-    var win = $( w ),
+  var win = $( w ),
 
-        ytUrlPrefix = "https://www.youtube.com/embed/",
-        ytEnableJsApi = "?enablejsapi=1",
-        getYTvid = function( url ) {
+      ytUrlPrefix = "https://www.youtube.com/embed/",
+      ytEnableJsApi = "?enablejsapi=1",
 
-            if ( /youtu\.be/.test( url ) ) {
+      lightboxCss = {
+          "display": "none",
+          "position": "fixed"
+      },
 
-                return url
-                    .split( "youtu.be/" )[1]
-                    .split( "?" )[0]
-                    .split( "&" )[0]
-                    .split( "#" )[0];
+      iframeCss = {
+          width: "100%",
+          height: "100%"
+      },
 
-            } else if ( /youtube\.com\/v\//.test( url ) ) {
+      overlayCss = {
+          "display": "none",
+          "position": "fixed",
+          "top": 0,
+          "left": 0,
+          "width": "100%",
+          "height": "100%"
+      },
 
-                return url
-                    .split( "youtube.com/v/" )[1]
-                    .split( "?" )[0]
-                    .split( "&" )[0]
-                    .split( "#" )[0];
+      defaults = {
+          minPaddingX: 50,
+          minPaddingY: 50,
+          ratio: 16/9,
+          cssClass: "yu2fvl",
+          overlayCssClass: "-overlay",
+          iframeCssClass: "-iframe",
+          closeCssClass: "-close",
+          closeText: "X",
+          open: false,
+          vid: false
+      };
 
-            }  else if ( /youtube\.com\/embed\//.test( url ) ) {
+  $.yu2fvl = function ( options ) {
+      // default options.
+      var settings = $.extend( {}, defaults, options );
 
-                return url
-                    .split( "youtube.com/embed/" )[1]
-                    .split( "?" )[0]
-                    .split( "&" )[0]
-                    .split( "#" )[0];
+      if( settings.vid === false ) {
+        throw "YOU MUST SET THE 'vid' option";
+      } else {
+        createLightbox( settings, null, settings.vid );
+      }
+  };
 
-            } else if ( /youtube.com|youtuberepeater.com|listenonrepeat.com/.test( url ) ) {
+  $.fn.yu2fvl = function( options ) {
 
-                return url
-                    .split( "v=" )[1]
-                    .split( "&" )[0]
-                    .split( "#" )[0];
+      // default options.
+      var settings = $.extend( {}, defaults, options );
 
-            } else {
-                return false;
-            }
-        },
+      // if there"s a video id,
+      if  ( settings.vid !== false ) {
+        createLightbox( settings, this, settings.vid );
+        return this;
+      } else {
+        return this.each(createLightboxForEach);
 
-        // send commands to the youtube API
-        callPlayer = function(iframe, func, args) {
-            if ( iframe.src.indexOf('youtube.com/embed') !== -1) {
-                iframe.contentWindow.postMessage( JSON.stringify({
-                    'event': 'command',
-                    'func': func,
-                    'args': args || []
-                } ), '*');
-            }
-        },
+        function createLightboxForEach() {
+          var self = $( this ),
+              vid = getYTvid( self.attr("href") );
 
-        lightboxCss = {
-            "display": "none",
-            "position": "fixed"
-        },
-
-        iframeCss = {
-            width: "100%",
-            height: "100%"
-        },
-
-        overlayCss = {
-            "display": "none",
-            "position": "fixed",
-            "top": 0,
-            "left": 0,
-            "width": "100%",
-            "height": "100%"
-        };
-
-    $.fn.yu2fvl = function( options ) {
-
-        // default options.
-        var settings = $.extend({
-            minPaddingX: 50,
-            minPaddingY: 50,
-            ratio: 16/9,
-            cssClass: "yu2fvl",
-            overlayCssClass: "-overlay",
-            iframeCssClass: "-iframe",
-            closeCssClass: "-close",
-            closeText: "X",
-            open: false,
-            vid: false
-        }, options );
-
-
-        // if there"s a video id,
-        if  ( settings.vid !== false ) {
-            createLightbox( this, settings.vid );
-            return this;
-        } else {
-            return this.each(function() {
-                var self = $( this );
-
-                createLightbox(
-                    self,
-                    getYTvid( self.attr("href") )
-                );
-            });
+          createLightbox( settings, self, vid );
         }
+      }
+  };
 
-        function createLightbox ( btn, vid ) {
-            var lightbox = $( doc.createElement( "DIV" ) )
-                    .addClass( settings.cssClass )
-                    .css(lightboxCss ),
+  function getYTvid( url ) {
+    if ( /youtu\.be/.test( url ) ) {
 
-                overlay = $( doc.createElement( "DIV" ) )
-                    .addClass( settings.cssClass + settings.overlayCssClass )
-                    .css( overlayCss ),
+      return url
+        .split( "youtu.be/" )[1]
+        .split( "?" )[0]
+        .split( "&" )[0]
+        .split( "#" )[0];
 
-                close = $(doc.createElement( "BUTTON" ) )
-                    .addClass( settings.cssClass + settings.closeCssClass )
-                    .html( settings.closeText ),
+    } else if ( /youtube\.com\/v\//.test( url ) ) {
 
-                iframe = $( doc.createElement("IFRAME" ) )
-                    .addClass( settings.cssClass + settings.iframeCssClass )
-                    .attr( { src: ytUrlPrefix + vid + ytEnableJsApi } )
-                    .css( iframeCss );
+      return url
+        .split( "youtube.com/v/" )[1]
+        .split( "?" )[0]
+        .split( "&" )[0]
+        .split( "#" )[0];
 
-            // append the iframe to the lightbox and the lightbox & overlay to the body
-            lightbox
-                .append( iframe )
-                .append( close );
+    }  else if ( /youtube\.com\/embed\//.test( url ) ) {
 
-            $( "body" ).append( overlay ).append( lightbox );
+      return url
+        .split( "youtube.com/embed/" )[1]
+        .split( "?" )[0]
+        .split( "&" )[0]
+        .split( "#" )[0];
 
-            if(settings.open ) {
-                // play the video when the iframe finishes loading
-                iframe.on( 'load', function() {
-				    playVideo();
-                });
-            } else {
-                // open the video on click on the btn
-                attachOpenVideo( btn );
-			}
+    } else if ( /youtube.com|youtuberepeater.com|listenonrepeat.com/.test( url ) ) {
 
-            attachCloseVideo( close.add( overlay ) );
+      return url
+        .split( "v=" )[1]
+        .split( "&" )[0]
+        .split( "#" )[0];
 
-            // set window resize and trigger to init resize
-            win
-                .on( "resize", resizeVideo )
-                .trigger( "resize" );
+    } else {
+      return false;
+    }
+  }
 
-            function resizeVideo() {
-                var win_width = win.width() - settings.minPaddingX,
-                    win_height = win.height() - settings.minPaddingY,
-                    win_ratio = win_width / win_height,
-                    ratio = settings.ratio;
+  // send commands to the youtube API
+  function callPlayer( iframe, func, args ) {
+    var message = JSON.stringify({
+      "event": "command",
+      "func": func,
+      "args": args || []
+    });
 
-                if ( win_ratio > ratio ) {
-                    lightbox.height( win_height );
-                    lightbox.width( win_height * ratio );
-                }
+    if ( iframe.src.indexOf( "youtube.com/embed" ) !== -1) {
+      iframe.contentWindow.postMessage( message, "*" );
+    }
+  }
 
-                else {
-                    lightbox.width( win_width );
-                    lightbox.height( win_width / ratio );
-                }
+  function createLightbox ( settings, btn, vid ) {
+    var lightbox = $( doc.createElement( "DIV" ) )
+          .addClass( settings.cssClass )
+          .css(lightboxCss ),
 
-                // we use the original window width and height to not include padding
-                // in the centering process
-                lightbox.css( "left", ( win.width() - lightbox.width() ) / 2 );
-                lightbox.css( "top", ( win.height() - lightbox.height() ) / 2 );
-            }
+        overlay = $( doc.createElement( "DIV" ) )
+          .addClass( settings.cssClass + settings.overlayCssClass )
+          .css( overlayCss ),
 
-            function playVideo() {
-                callPlayer(iframe[0], "playVideo");
-                openVideo();
-            }
+        close = $(doc.createElement( "BUTTON" ) )
+          .addClass( settings.cssClass + settings.closeCssClass )
+          .html( settings.closeText ),
 
-            function attachOpenVideo( elem ) {
-                elem.on("click", function ( e ) {
-                    e.preventDefault();
-                    playVideo();
-                });
-            }
+        iframe = $( doc.createElement("IFRAME" ) )
+          .addClass( settings.cssClass + settings.iframeCssClass )
+          .attr( { src: ytUrlPrefix + vid + ytEnableJsApi } )
+          .css( iframeCss );
 
-            function attachCloseVideo( elem ) {
-                elem.on("click", function ( e ) {
-                    e.preventDefault();
-                    callPlayer(iframe[0], "pauseVideo");
-                    closeVideo();
-                });
-            }
+    // append the iframe to the lightbox and the lightbox & overlay to the body
+    lightbox
+      .append( iframe )
+      .append( close );
 
-            function openVideo() {
-                overlay
-                    .stop()
-                    .fadeIn( "fast" );
-                lightbox
-                    .stop()
-                    .fadeIn( "fast" );
-            }
+    $( "body" ).append( overlay ).append( lightbox );
 
-            function closeVideo() {
+    if( settings.open ) {
+      // play the video when the iframe finishes loading
+      iframe.on( 'load', function() {
+        playVideo();
+      });
+    }
 
-                overlay
-                    .stop()
-                    .fadeOut( "fast" );
-                lightbox
-                    .stop()
-                    .fadeOut( "fast", function() {
-						// Destroy video if it's not attached to anything 
-						// to prevent duplicates
-						if(settings.open) {
-							overlay.remove();
-							lightbox.remove();
-						} 
-					});
-            }
-        }
-    };
+    if(btn !== null) {
+      // open the video on click on the btn
+      attachOpenVideo( btn );
+    }
+
+    attachCloseVideo( close.add( overlay ) );
+
+    // set window resize and trigger to init resize
+    win
+      .on( "resize", resizeVideo )
+      .trigger( "resize" );
+
+    function resizeVideo() {
+      var win_width = win.width() - settings.minPaddingX,
+          win_height = win.height() - settings.minPaddingY,
+          win_ratio = win_width / win_height,
+          ratio = settings.ratio;
+
+      if ( win_ratio > ratio ) {
+        lightbox.height( win_height );
+        lightbox.width( win_height * ratio );
+      }
+
+      else {
+        lightbox.width( win_width );
+        lightbox.height( win_width / ratio );
+      }
+
+      // we use the original window width and height to not include padding
+      // in the centering process
+      lightbox.css( "left", ( win.width() - lightbox.width() ) / 2 );
+      lightbox.css( "top", ( win.height() - lightbox.height() ) / 2 );
+    }
+
+    function playVideo() {
+      callPlayer( iframe[0], "playVideo" );
+      openVideo();
+    }
+
+    function openVideo() {
+      overlay
+        .stop()
+        .fadeIn( "fast" );
+      lightbox
+        .stop()
+        .fadeIn( "fast" );
+    }
+
+    function closeVideo() {
+      overlay
+        .stop()
+        .fadeOut( "fast" );
+      lightbox
+        .stop()
+        .fadeOut( "fast", function() {
+          // Destroy video if it's not attached to anything 
+          // to prevent duplicates
+          if( btn === null && settings.open ) {
+            overlay.remove();
+            lightbox.remove();
+          } 
+        });
+    }
+
+    function attachOpenVideo( elem ) {
+      elem.on( "click", function ( e ) {
+        e.preventDefault();
+        playVideo();
+      });
+    }
+
+    function attachCloseVideo( elem ) {
+      elem.on( "click", function ( e ) {
+        e.preventDefault();
+        callPlayer( iframe[0], "pauseVideo" );
+        closeVideo();
+      });
+    }
+  }
 
 })( jQuery, window, document );

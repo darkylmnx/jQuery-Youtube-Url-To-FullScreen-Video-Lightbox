@@ -45,6 +45,20 @@ You can also directly pass a **youtube video id** to the plugin
 `  $('.play-1').yu2fvl({ vid: 'QImBolnTVH8' });`
 `</script>`
 
+To auto-open a video on page load with an element to trigger it back later
+
+`<a class="play-1" href="https://www.youtube.com/watch?v=AbTUw7aTITg">Play my video</a>`
+
+`<script>`
+`  $('.play-1').yu2fvl({ open: true });`
+`</script>`
+
+To auto-open a video on page load just once : **vid** (youtube video id) option is required
+
+`<script>`
+`  $.yu2fvl({ vid: 'AbTUw7aTITg', open: true });`
+`</script>`
+
 All this works perfectly with different anchors on the same selector with different href
 
 `<a class="play-1" href="https://www.youtube.com/watch?v=ID-1">Play my video</a>`

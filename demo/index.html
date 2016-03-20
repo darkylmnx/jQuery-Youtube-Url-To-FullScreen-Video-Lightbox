@@ -69,18 +69,20 @@
     </code>
   </pre>
 
-  <p>Demo called directly from JavaScript. </p>
-  <p>
-    <button class="play-5">Play my video</button>
-  </p>
+  <p>Lightbox called directly from JavaScript on page load.</p>
+  <p><a href="auto-open.html">Try it on this page</a></p>
   <pre>
     <code class="language-html">
-    &lt;button class=&quot;play-5&quot;&gt;Play my video&lt;/button&gt;
+    &lt;button class=&quot;play-5&quot;&gt;Click to re-open&lt;/button&gt;
 
     &lt;script&gt;
-      $(".play-5").click( function() {
-	    $.fn.yu2fvl({ vid: "AbTUw7aTITg", ratio: 21/9, open: true });
-	  });
+      // with a button to re-open it later
+      $('.play-5').yu2fvl({ open: true });
+
+      // just to open once, no element linked to it
+      // if you open it directly with no element linked to it
+      // the "vid" parameter is required
+      $.yu2fvl({ vid: "AbTUw7aTITg", open: true });
     &lt;/script&gt;
     </code>
   </pre>
@@ -91,13 +93,5 @@
   <script>$(".play-1, .play-2").yu2fvl();</script>
   <script>$(".play-3").yu2fvl({ vid: "AbTUw7aTITg", ratio: 4/3 });</script>
   <script>$(".play-4").yu2fvl({ minPaddingY: 200, minPaddingX: 200, vid: "AbTUw7aTITg", ratio: 21/9 });</script>
-  <script>
-    $(".play-5").click( function() {
-      $.fn.yu2fvl({ vid: "AbTUw7aTITg", ratio: 21/9, open: true });
-    });
-  </script>
-  <script>
-
-  </script>
 </body>
 </html>

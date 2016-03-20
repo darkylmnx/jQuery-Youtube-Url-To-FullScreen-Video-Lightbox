@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Demo - jQuery Youtube Url To FullScreen Video Lightbox</title>
+  <link href="../bower_components/prism/themes/prism.css" rel="stylesheet" type="text/css">
+  <link href="../src/jquery.yu2fvl.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+  <h1>Auto Open - jQuery Youtube Url To FullScreen Video Lightbox</h1>
+
+  <p>Lightbox called directly from JavaScript on page load.</p>
+  <p><a class="play-5" href="https://youtu.be/AbTUw7aTITg">Click to re-open</a></p>
+  <pre>
+    <code class="language-html">
+    &lt;button class=&quot;play-5&quot;&gt;Click to re-open&lt;/button&gt;
+
+    &lt;script&gt;
+      // with a button to re-open it later
+      $('.play-5').yu2fvl({ open: true });
+
+      // just to open once, no element linked to it
+      // if you open it directly with no element linked to it
+      // the "vid" parameter is required
+      $.yu2fvl({ vid: "AbTUw7aTITg", open: true });
+    &lt;/script&gt;
+    </code>
+  </pre>
+
+  <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="../bower_components/prism/prism.js"></script>
+  <script src="../src/jquery.yu2fvl.js"></script>
+  <script>$('.play-5').yu2fvl({ open: true });</script>
+</body>
+</html>
