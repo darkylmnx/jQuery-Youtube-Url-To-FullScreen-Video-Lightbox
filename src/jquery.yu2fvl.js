@@ -77,7 +77,7 @@
 
   function getYTvid( url ) {
     var id = /(youtube\.com\/(watch\?v=|v\/|embed\/)|youtu\.be\/)([\w-]+)/.exec(url)
-    var t = /[?&]t=(\d+)/.exec(url)
+    var t = /[?&#]t=(\d+)/.exec(url)
 
     if (id && id[3]) {
       return {
