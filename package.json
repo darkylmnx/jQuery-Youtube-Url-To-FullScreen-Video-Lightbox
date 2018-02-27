@@ -1,6 +1,6 @@
 {
   "name": "jquery-youtube-url-to-fullscreen-video-lightbox",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "gulp tasks for yu2fvl jquery plugin",
   "main": "index.js",
   "scripts": {
