@@ -80,7 +80,7 @@ The various youtube url formats acceptable :
 * http://www.youtube.com/watch?v=QImBolnTVH8
 * http://www.youtube.com/v/QImBolnTVH8
 * http://youtu.be/QImBolnTVH8
-* https://www.youtube.com/watch?list=RDQImBolnTVH8&amp;v=QImBolnTVH8#t=6
+* https://www.youtube.com/watch?list=RDQImBolnTVH8&v=QImBolnTVH8&t=6
 
 ## Options
 
@@ -110,6 +110,9 @@ The various youtube url formats acceptable :
 
 *vid*: false
 // set directly a youtube video id (though using an anchor is cool for SEO !)
+
+*t*: 0
+// sets time start of the video in seconds (60 = 1 minute)
 
 *open*: false
 // Open the lightbox immediately from JavaScript. Requires *vid* to be set to work properly.
