@@ -7,7 +7,8 @@
   var win = $( w ),
 
       ytUrlPrefix = "https://www.youtube.com/embed/",
-      ytEnableJsApi = "?enablejsapi=1",
+      ytT = "?start=",
+      ytEnableJsApi = "&enablejsapi=1",
 
       lightboxCss = {
           "display": "none",
@@ -38,7 +39,8 @@
           closeCssClass: "-close",
           closeText: "X",
           open: false,
-          vid: false
+          vid: false,
+          t: 0
       };
 
   $.yu2fvl = function ( options ) {
@@ -48,7 +50,7 @@
       if( settings.vid === false ) {
         throw "YOU MUST SET THE 'vid' option";
       } else {
-        createLightbox( settings, null, settings.vid );
+        createLightbox( settings, null, settings.vid, settings.t );
       }
   };
 
@@ -59,7 +61,7 @@
 
       // if there"s a video id,
       if  ( settings.vid !== false ) {
-        createLightbox( settings, this, settings.vid );
+        createLightbox( settings, this, settings.vid, settings.t );
         return this;
       } else {
         return this.each(createLightboxForEach);
@@ -68,43 +70,20 @@
           var self = $( this ),
               vid = getYTvid( self.attr("href") );
 
-          createLightbox( settings, self, vid );
+          createLightbox( settings, self, vid.id, vid.t );
         }
       }
   };
 
   function getYTvid( url ) {
-    if ( /youtu\.be/.test( url ) ) {
+    var id = /(youtube\.com\/(watch\?v=|v\/|embed\/)|youtu\.be\/)([\w-]+)/.exec(url)
+    var t = /[?&]t=(\d+)/.exec(url)
 
-      return url
-        .split( "youtu.be/" )[1]
-        .split( "?" )[0]
-        .split( "&" )[0]
-        .split( "#" )[0];
-
-    } else if ( /youtube\.com\/v\//.test( url ) ) {
-
-      return url
-        .split( "youtube.com/v/" )[1]
-        .split( "?" )[0]
-        .split( "&" )[0]
-        .split( "#" )[0];
-
-    }  else if ( /youtube\.com\/embed\//.test( url ) ) {
-
-      return url
-        .split( "youtube.com/embed/" )[1]
-        .split( "?" )[0]
-        .split( "&" )[0]
-        .split( "#" )[0];
-
-    } else if ( /youtube.com|youtuberepeater.com|listenonrepeat.com/.test( url ) ) {
-
-      return url
-        .split( "v=" )[1]
-        .split( "&" )[0]
-        .split( "#" )[0];
-
+    if (id && id[3]) {
+      return {
+        id: id[3],
+        t: t && t[1]
+      };
     } else {
       return false;
     }
@@ -123,7 +102,7 @@
     }
   }
 
-  function createLightbox ( settings, btn, vid ) {
+  function createLightbox ( settings, btn, vid, t ) {
     var lightbox = $( doc.createElement( "DIV" ) )
           .addClass( settings.cssClass )
           .css(lightboxCss ),
@@ -138,7 +117,7 @@
 
         iframe = $( doc.createElement("IFRAME" ) )
           .addClass( settings.cssClass + settings.iframeCssClass )
-          .attr( { src: ytUrlPrefix + vid + ytEnableJsApi } )
+          .attr( { src: ytUrlPrefix + vid + ytT + t + ytEnableJsApi } )
           .css( iframeCss );
 
     // append the iframe to the lightbox and the lightbox & overlay to the body
