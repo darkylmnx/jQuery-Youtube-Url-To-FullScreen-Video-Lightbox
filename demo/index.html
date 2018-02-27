@@ -12,11 +12,11 @@
   <p>Demo with <strong>youtube.com</strong> format</p>
 
   <p>
-    <a class="play-1" href="https://www.youtube.com/watch?v=AbTUw7aTITg">Play my video</a>
+    <a class="play-1" href="https://youtu.be/S-sJp1FfG7Q?t=136">Play my video</a>
   </p>
   <pre>
     <code class="language-html">
-    &lt;a class=&quot;play-1&quot; href=&quot;https://www.youtube.com/watch?v=AbTUw7aTITg&quot;&gt;Play my video&lt;/a&gt;
+    &lt;a class=&quot;play-1&quot; href=&quot;https://youtu.be/S-sJp1FfG7Q?t=136&quot;&gt;Play my video&lt;/a&gt;
 
     &lt;script&gt;
       $(".play-1").yu2fvl();
@@ -39,7 +39,7 @@
     </code>
   </pre>
 
-  <p>Demo with direct youtbe video id "AbTUw7aTITg" and different aspect ratio 4:3</p>
+  <p>Demo with direct youtbe video id "AbTUw7aTITg", start time (seconds) and different aspect ratio 4:3</p>
 
   <p>
     <button class="play-3">Play my video</button>
@@ -49,7 +49,7 @@
     &lt;button class=&quot;play-3&quot;&gt;Play my video&lt;/button&gt;
 
     &lt;script&gt;
-      $(".play-3").yu2fvl({ vid: "AbTUw7aTITg", ratio: 4/3 });
+      $(".play-3").yu2fvl({ vid: "AbTUw7aTITg", t: 40, ratio: 4/3 });
     &lt;/script&gt;
     </code>
   </pre>
@@ -91,7 +91,7 @@
   <script src="../bower_components/prism/prism.js"></script>
   <script src="../src/jquery.yu2fvl.js"></script>
   <script>$(".play-1, .play-2").yu2fvl();</script>
-  <script>$(".play-3").yu2fvl({ vid: "AbTUw7aTITg", ratio: 4/3 });</script>
+  <script>$(".play-3").yu2fvl({ vid: "AbTUw7aTITg", t: 40,ratio: 4/3 });</script>
   <script>$(".play-4").yu2fvl({ minPaddingY: 200, minPaddingX: 200, vid: "AbTUw7aTITg", ratio: 21/9 });</script>
 </body>
 </html>
